@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
+using VendaCap.Permissions;
 using VendaCap.Localization;
 using VendaCap.MultiTenancy;
 using Volo.Abp.Identity.Web.Navigation;
@@ -45,5 +46,23 @@ public class VendaCapMenuContributor : IMenuContributor
 
         administration.SetSubItemOrder(IdentityMenuNames.GroupName, 2);
         administration.SetSubItemOrder(SettingManagementMenuNames.GroupName, 3);
+        if (await context.IsGrantedAsync(VendaCapPermissions.TicketSet.Default))
+        {
+            context.Menu.AddItem(
+                new ApplicationMenuItem(VendaCapMenus.TicketSet, l["Menu:TicketSet"], "/Common/TicketSet")
+            );
+        }
+        if (await context.IsGrantedAsync(VendaCapPermissions.Person.Default))
+        {
+            context.Menu.AddItem(
+                new ApplicationMenuItem(VendaCapMenus.Person, l["Menu:Person"], "/Common/Person")
+            );
+        }
+        if (await context.IsGrantedAsync(VendaCapPermissions.Place.Default))
+        {
+            context.Menu.AddItem(
+                new ApplicationMenuItem(VendaCapMenus.Place, l["Menu:Place"], "/Common/Place")
+            );
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+using VendaCap.Common;
+using System;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -43,6 +44,9 @@ public class VendaCapEntityFrameworkCoreModule : AbpModule
                 /* Remove "includeAllEntities: true" to create
                  * default repositories only for aggregate roots */
             options.AddDefaultRepositories(includeAllEntities: true);
+            options.AddRepository<TicketSet, TicketSetRepository>();
+            options.AddRepository<Person, PersonRepository>();
+            options.AddRepository<Place, PlaceRepository>();
         });
 
         Configure<AbpDbContextOptions>(options =>

@@ -1,0 +1,48 @@
+@page
+@using VendaCap.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using VendaCap.Web.Pages.Common.Place
+@using VendaCap.Localization
+@using VendaCap.Web.Menus
+@model IndexModel
+@inject IPageLayout PageLayout
+@inject IHtmlLocalizer<VendaCapResource> L
+@inject IAuthorizationService Authorization
+@{
+    PageLayout.Content.Title = L["Place"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:Place"].Value);
+    PageLayout.Content.MenuItemName = VendaCapMenus.Place;
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/Common/Place/index.js" />
+}
+@section styles
+{
+    <abp-style src="/Pages/Common/Place/index.css"/>
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["Place"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+			    @if (await Authorization.IsGrantedAsync(VendaCapPermissions.Place.Create))
+                {
+                <abp-button id="NewPlaceButton"
+                            text="@L["CreatePlace"].Value"
+                            icon="plus"
+                            button-type="Primary" />
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="PlaceTable" class="nowrap"/>
+    </abp-card-body>
+</abp-card>

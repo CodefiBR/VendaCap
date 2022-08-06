@@ -1,4 +1,4 @@
-﻿namespace VendaCap.Web.Menus;
+namespace VendaCap.Web.Menus;
 
 public class VendaCapMenus
 {
@@ -7,4 +7,7 @@ public class VendaCapMenus
 
     //Add your menu items here...
 
+    public const string TicketSet = Prefix + ".TicketSet";
+    public const string Person = Prefix + ".Person";
+    public const string Place = Prefix + ".Place";
 }

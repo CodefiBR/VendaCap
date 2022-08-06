@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -12,6 +12,8 @@ using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using VendaCap.Common;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 
 namespace VendaCap.EntityFrameworkCore;
 
@@ -51,6 +53,9 @@ public class VendaCapDbContext :
     public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
 
     #endregion
+    public DbSet<TicketSet> TicketSets { get; set; }
+    public DbSet<Person> People { get; set; }
+    public DbSet<Place> Places { get; set; }
 
     public VendaCapDbContext(DbContextOptions<VendaCapDbContext> options)
         : base(options)
@@ -81,5 +86,35 @@ public class VendaCapDbContext :
         //    b.ConfigureByConvention(); //auto configure for the base class props
         //    //...
         //});
+
+
+        builder.Entity<TicketSet>(b =>
+        {
+            b.ToTable(VendaCapConsts.DbTablePrefix + "TicketSets", VendaCapConsts.DbSchema);
+            b.ConfigureByConvention(); 
+            
+
+            /* Configure more properties here */
+        });
+
+
+        builder.Entity<Person>(b =>
+        {
+            b.ToTable(VendaCapConsts.DbTablePrefix + "People", VendaCapConsts.DbSchema);
+            b.ConfigureByConvention(); 
+            
+
+            /* Configure more properties here */
+        });
+
+
+        builder.Entity<Place>(b =>
+        {
+            b.ToTable(VendaCapConsts.DbTablePrefix + "Places", VendaCapConsts.DbSchema);
+            b.ConfigureByConvention(); 
+            
+
+            /* Configure more properties here */
+        });
     }
 }
